@@ -11,7 +11,7 @@ def mat_to_coco_format(mat_path, image_path, save_path):
         "categories": [
             {
                 'id': i,
-                'names': str(i)
+                'name': str(i)
             } for i in range(10)
         ]
     }
@@ -89,5 +89,5 @@ def mat_to_coco_format(mat_path, image_path, save_path):
 
 mat_path = '../origin dataset/train/train/digitStruct.mat'
 img_path = '../origin dataset/train/train/'
-save_path = './COCOAnnotation'
+save_path = './data/COCOAnnotation.json'
 mat_to_coco_format(mat_path, img_path, save_path)
