@@ -1,4 +1,4 @@
-_base_ = 'mmdetection/configs/faster_rcnn/faster_rcnn_r50_caffe_c4_1x_coco.py'
+_base_ = 'mmdetection/configs/faster_rcnn/faster_rcnn_r50_caffe_fpn_1x_coco.py'
 
 model = dict(
     roi_head=dict(
@@ -13,12 +13,12 @@ data = dict(
     train=dict(
         img_prefix='../data/train/',
         classes=classes,
-        ann_file='../data/COCOAnnotation.json'),
+        ann_file='../data/train.json'),
     val=dict(
         img_prefix='../data/val/',
         classes=classes,
-        ann_file='../data/COCOAnnotation.json'),
+        ann_file='../data/val.json'),
     test=dict(
         img_prefix='../data/val/',
-        classes=classes,
-        ann_file='../data/COCOAnnotation.json'))
+        classes=classes)
+)

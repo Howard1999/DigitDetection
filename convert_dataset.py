@@ -2,10 +2,33 @@ import h5py
 import tqdm
 import json
 import cv2
+import os
+from shutil import copyfile
 
 
-def mat_to_coco_format(mat_path, image_path, save_path):
-    coco = {
+def convert_dataset(origin_dataset_path, target_folder, train_ratio=0.7):
+    """target folder should have train,val and test folder"""
+
+    mat_path = origin_dataset_path + 'train/train/digitStruct.mat'
+    image_path = origin_dataset_path + 'train/train/'
+    test_image_path = origin_dataset_path + 'test/test/'
+
+    train_target_folder = target_folder + 'train/'
+    val_target_folder = target_folder + 'val/'
+    test_target_folder = target_folder + 'test/'
+
+    coco_train = {
+        'images': [],
+        "annotations": [],
+        "categories": [
+            {
+                'id': i,
+                'name': str(i)
+            } for i in range(10)
+        ]
+    }
+
+    coco_val = {
         'images': [],
         "annotations": [],
         "categories": [
@@ -20,10 +43,18 @@ def mat_to_coco_format(mat_path, image_path, save_path):
     sheet = f['digitStruct']
 
     length = sheet['name'].shape[0]
+    train_length = int(length * train_ratio)
     for i in tqdm.tqdm(range(length)):
         # name
         name_ref = sheet['name'][i, 0]
         name = ''.join([chr(c[0]) for c in f[name_ref].value])
+
+        if i < train_length:
+            coco = coco_train
+            copyfile(image_path + name, train_target_folder + name)
+        else:
+            coco = coco_val
+            copyfile(image_path + name, val_target_folder + name)
 
         # add image
         img = cv2.imread(image_path+name)
@@ -83,11 +114,15 @@ def mat_to_coco_format(mat_path, image_path, save_path):
 
             coco['annotations'].append(annotation)
 
-    with open(save_path, 'w') as fp:
-        fp.write(json.dumps(coco, sort_keys=True, indent=4))
+    with open(target_folder + 'train.json', 'w') as fp:
+        fp.write(json.dumps(coco_train, sort_keys=True, indent=4))
+
+    with open(target_folder + 'val.json', 'w') as fp:
+        fp.write(json.dumps(coco_val, sort_keys=True, indent=4))
+
+    # move test set
+    for filename in tqdm.tqdm(os.listdir(test_image_path)):
+        copyfile(test_image_path + filename, test_target_folder + filename)
 
 
-mat_path = '../origin dataset/train/train/digitStruct.mat'
-img_path = '../origin dataset/train/train/'
-save_path = './data/COCOAnnotation.json'
-mat_to_coco_format(mat_path, img_path, save_path)
+convert_dataset('../origin dataset/', './data/')
