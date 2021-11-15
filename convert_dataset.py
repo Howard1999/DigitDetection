@@ -143,6 +143,9 @@ def convert_dataset(origin_dataset_path, target_folder, train_ratio=0.7):
         coco_test['images'].append(image)
         copyfile(test_image_path + filename, test_target_folder + filename)
 
+    # sort image order
+    coco_test['images'].sort(key=lambda img: img['id'])
+
     with open(target_folder + 'test.json', 'w') as fp:
         fp.write(json.dumps(coco_test, sort_keys=True, indent=4))
 
