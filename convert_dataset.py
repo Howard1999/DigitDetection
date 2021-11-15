@@ -132,18 +132,16 @@ def convert_dataset(origin_dataset_path, target_folder, train_ratio=0.7):
         fp.write(json.dumps(coco_val, sort_keys=True, indent=4))
 
     # move test set
-    i = 0
     for filename in tqdm.tqdm(os.listdir(test_image_path)):
         img = cv2.imread(test_image_path + filename)
         image = {
-            "id": i,
+            "id": int(filename.split('.')[0]),
             "width": img.shape[1],
             "height": img.shape[0],
             "file_name": filename,
         }
         coco_test['images'].append(image)
         copyfile(test_image_path + filename, test_target_folder + filename)
-        i += 1
 
     with open(target_folder + 'test.json', 'w') as fp:
         fp.write(json.dumps(coco_test, sort_keys=True, indent=4))
