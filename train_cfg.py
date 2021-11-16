@@ -1,12 +1,12 @@
-_base_ = 'mmdetection/configs/faster_rcnn/faster_rcnn_r50_caffe_fpn_1x_coco.py'
+_base_ = 'mmdetection/configs/faster_rcnn/faster_rcnn_r50_fpn_1x_coco.py'
 
 model = dict(
     roi_head=dict(
         bbox_head=dict(num_classes=10)
-    )
+    ),
 )
 
-dataset_type = 'COCODataset'
+dataset_type = 'CocoDataset'
 classes = ('0', '1', '2', '3', '4',
            '5', '6', '7', '8', '9')
 data = dict(
@@ -19,6 +19,9 @@ data = dict(
         classes=classes,
         ann_file='../data/val.json'),
     test=dict(
-        img_prefix='../data/val/',
-        classes=classes)
+        img_prefix='../data/test/',
+        classes=classes,
+        ann_file='../data/test.json')
 )
+
+optimizer = dict(lr=2e-4)
