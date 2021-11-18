@@ -1,2 +1,3 @@
 mmdetection
-data
+coco_data
+yolo_data
