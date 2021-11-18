@@ -1,4 +1,4 @@
-_base_ = 'mmdetection/configs/faster_rcnn/faster_rcnn_r50_fpn_1x_coco.py'
+_base_ = 'mmdetection/configs/faster_rcnn/faster_rcnn_x101_32x4d_fpn_1x_coco.py'
 
 model = dict(
     roi_head=dict(
@@ -24,4 +24,4 @@ data = dict(
         ann_file='../data/test.json')
 )
 
-optimizer = dict(lr=2e-4)
+optimizer = dict(lr=2e-3)
