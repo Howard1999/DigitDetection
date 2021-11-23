@@ -17,7 +17,7 @@ https://github.com/open-mmlab/mmdetection <br>
 https://github.com/ultralytics/yolov5 <br>
 
 <h3>2. Model link</h3>
-<a href="https://drive.google.com/file/d/13myWMhivJAfAs_6sIIhwdlhkzIK0G5G-/view?usp=sharing">
+<a href="https://drive.google.com/file/d/1imEOPP2W7Q71aW2wBBwRIWvts5VkIrMJ/view?usp=sharing">
 Download Link
 </a>
 
