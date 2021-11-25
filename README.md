@@ -25,3 +25,19 @@ Download Link
 <a href="https://drive.google.com/file/d/12ovdZO3WeczAX1Xlv2KsDkMP7nzVrH6r/view?usp=sharing">
 Colab
 </a>
+<br>
+or
+<br>
+
+``` python
+from inference import inference
+'''
+assume folder structure
+./
+ |model.pt
+ |data/
+      |test/...  << test image folder
+ |yolov5/...     << git cloned yolov5
+'''
+inference('./model.pt', './data/test', './answer.json') # model_path, test_path, output_path
+```
